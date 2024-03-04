@@ -1,32 +1,37 @@
 "use client"
-
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
-
-
 const VideoStatistics: React.FC = () => {
-    
-    const [videoFeedUrl, setVideoFeedUrl] = useState('http://traffic.aniccadatatest.com/video_feed');
+    const [videoFeedUrl, setVideoFeedUrl] = useState('http://localhost:5000/video_feed');
     const [vehicleCount, setVehicleCount] = useState<number>(0);
-
+    const [busCount, setBusCount] = useState<number>(0);
+    const [carCount, setCarCount] = useState<number>(0);
+    const [truckCount, setTruckCount] = useState<number>(0);
+    const [bikeCount, setBikeCount] = useState<number>(0);
+    const fetchVehicleCount = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/all_counts');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            setVehicleCount(data.vehicle);
+            setBusCount(data.bus);
+            setCarCount(data.car);
+            setTruckCount(data.truck);
+            setBikeCount(data.bike);
+        } catch (error) {
+            console.error('Error fetching vehicle counts:', error);
+            // You can set a state to show an error message to the user if needed.
+        }
+    };
+    // useEffect(() => {
+    //     fetchVehicleCount();
+    // }, []);
     useEffect(() => {
-            const fetchVehicleCount = async () => {
-                try {
-                    const response = await fetch('http://traffic.aniccadatatest.com/vehicle_count');
-                    const data = await response.json();
-                    setVehicleCount(data.count);
-                } catch (error) {
-                    console.error('Error fetching vehicle count:', error);
-                }
-            };
-
-            fetchVehicleCount();
-            const intervalId = setInterval(fetchVehicleCount, 500);
-
-            return () => clearInterval(intervalId);
-
+        const intervalId = setInterval(fetchVehicleCount, 300);
+        return () => clearInterval(intervalId);
     }, []);
-
     return (
         <>
             <div className="h-98px bg-white w-screen px-6 py-4 border-b-2">
@@ -35,10 +40,10 @@ const VideoStatistics: React.FC = () => {
             <div className="flex flex-row mt-10 mx-8 min-h-[600px] w-[98%] p-[2%]">
                 <div className="bg-white p-4 w-[65%] col-span-2 flex flex-col">
                     <div className='ml-6'>
-                        Location: <span className='font-bold'>Anil Kumble Circle</span>
+                        Location: <span className='font-bold'>112 Ave NE & NE 10th St, Bellevue, WA</span>
                     </div>
                     <div className='ml-6 mt-10 w-[60vw] h-[60vh]'>
-                    {/* <Image alt='video_feed' width={200} height={100} src={"http://traffic.aniccadatatest.com/video_feed"} className='w-[60vw] h-[60vh]' title="Traffic Video Feed" /> */}
+                        {/* <Image alt='video_feed' width={200} height={100} src={"http://traffic.aniccadatatest.com/video_feed"} className='w-[60vw] h-[60vh]' title="Traffic Video Feed" /> */}
                         <iframe width={800} height={500} src={videoFeedUrl} className='scale-[160%] ml-56 mt-32' title="Traffic Video Feed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                     </div>
                 </div>
@@ -53,16 +58,16 @@ const VideoStatistics: React.FC = () => {
                     <div className='ml-6 font-bold text-lg py-2 mt-4'>Vehicles Classification</div>
                     <div className='mt-4 grid grid-cols-2 ml-6 gap-4'>
                         <div className='p-6 rounded-md bg-[#F2F8FF]'>
-                            Buses: <span className='font-bold'>12</span>
+                            Buses: <span className='font-bold'>{busCount}</span>
                         </div>
                         <div className='p-6 rounded-md bg-[#F2F8FF]'>
-                            Cars: <span className='font-bold'>137</span>
+                            Cars: <span className='font-bold'>{carCount}</span>
                         </div>
                         <div className='p-6 rounded-md bg-[#F2F8FF]'>
-                            Trucks: <span className='font-bold'>39</span>
+                            Trucks: <span className='font-bold'>{truckCount}</span>
                         </div>
                         <div className='p-6 rounded-md bg-[#F2F8FF]'>
-                            Bikes: <span className='font-bold'>0</span>
+                            Bikes: <span className='font-bold'>{bikeCount}</span>
                         </div>
                     </div>
                 </div>
@@ -70,5 +75,4 @@ const VideoStatistics: React.FC = () => {
         </>
     );
 };
-
 export default VideoStatistics;
