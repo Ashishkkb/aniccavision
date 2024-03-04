@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 const VideoStatistics: React.FC = () => {
-    const [videoFeedUrl, setVideoFeedUrl] = useState('http://localhost:5000/video_feed');
+    const [videoFeedUrl, setVideoFeedUrl] = useState('https://self-watt-destroyed-downloads.trycloudflare.com/video_feed');
     const [vehicleCount, setVehicleCount] = useState<number>(0);
     const [busCount, setBusCount] = useState<number>(0);
     const [carCount, setCarCount] = useState<number>(0);
@@ -10,7 +10,7 @@ const VideoStatistics: React.FC = () => {
     const [bikeCount, setBikeCount] = useState<number>(0);
     const fetchVehicleCount = async () => {
         try {
-            const response = await fetch('http://localhost:5000/all_counts');
+            const response = await fetch('https://self-watt-destroyed-downloads.trycloudflare.com/all_counts');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
