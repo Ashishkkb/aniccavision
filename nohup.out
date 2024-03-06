@@ -1,0 +1,63 @@
+
+> aniccavision@0.1.0 build
+> next build
+
+   ▲ Next.js 14.1.0
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5) 
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    6.35 kB        90.5 kB
+└ ○ /_not-found                          882 B          85.1 kB
++ First Load JS shared by all            84.2 kB
+  ├ chunks/69-e5de1e9d5460d8ef.js        28.9 kB
+  ├ chunks/fd9d1056-85aab0186376662d.js  53.4 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+○  (Static)  prerendered as static content
+
+
+> aniccavision@0.1.0 start
+> next start -H '0.0.0.0' -p 3000
+
+   ▲ Next.js 14.1.0
+   - Local:        http://localhost:3000
+   - Network:      http://0.0.0.0:3000
+
+ ✓ Ready in 588ms
+
+> aniccavision@0.1.0 start
+> next start -H '0.0.0.0' -p 3000
+
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    at Server.setupListenHandle [as _listen2] (node:net:1872:16)
+    at listenInCluster (node:net:1920:12)
+    at doListen (node:net:2075:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 3000
+}
+
+> aniccavision@0.1.0 start
+> next start -H '0.0.0.0' -p 3000
+
+   ▲ Next.js 14.1.0
+   - Local:        http://localhost:3000
+   - Network:      http://0.0.0.0:3000
+
+ ✓ Ready in 571ms
