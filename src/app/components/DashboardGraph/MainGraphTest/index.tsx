@@ -85,6 +85,12 @@ const MainGraphTest: React.FC = () => {
     // setGraphData(demoData);
   }, [startDate, endDate]);
 
+  const onClickFunction = () => {
+    return(
+      console.log("onclick")
+    )
+  }
+
   return (
     <div>
       <div className='flex flex-col items-start justify-between p-2 mx-auto'>
@@ -123,12 +129,12 @@ const MainGraphTest: React.FC = () => {
             <DatePicker
               selected={startDate}
               onChange={(date: Date) => setStartDate(date)}
-              customInput={<CustomDateComponent type='From' onClick={onclick} date={startDate.toLocaleDateString()} />}
+              customInput={<CustomDateComponent type='From' onClick={onClickFunction} date={startDate.toLocaleDateString()} />}
             />
             <DatePicker
               selected={endDate}
               onChange={(date: Date) => setEndDate(date)}
-              customInput={<CustomDateComponent type='To' onClick={onclick} date={endDate.toLocaleDateString()} />}
+              customInput={<CustomDateComponent type='To' onClick={onClickFunction} date={endDate.toLocaleDateString()} />}
             />
           </div>
         </div>
