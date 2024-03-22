@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import Image from "next/image";
 import calendar from "../../../../../public/assets/CalendarBlank.svg";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from 'axios';
 
 interface GraphData {
   data: {
@@ -20,6 +21,8 @@ interface ACTIVE {
   monthly: boolean;
 }
 
+
+
 const MainGraphTest: React.FC = () => {
   const [graphData, setGraphData] = useState<GraphData[]>([]);
   const [active, setActive] = useState<ACTIVE>({
@@ -29,6 +32,33 @@ const MainGraphTest: React.FC = () => {
   });
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
+
+  // const demoData: GraphData[] = [
+  //   {
+  //     data: { buses: 10, cars: 20, trucks: 5 },
+  //     label: "2024-02-01 00:00:00 - 2024-02-02 00:00:00"
+  //   },
+  //   {
+  //     data: { buses: 15, cars: 25, trucks: 8 },
+  //     label: "2024-02-02 00:00:00 - 2024-02-03 00:00:00"
+  //   },
+  //   {
+  //     data: { buses: 12, cars: 22, trucks: 6 },
+  //     label: "2024-02-03 00:00:00 - 2024-02-04 00:00:00"
+  //   },
+  //   {
+  //     data: { buses: 18, cars: 30, trucks: 10 },
+  //     label: "2024-02-04 00:00:00 - 2024-02-05 00:00:00"
+  //   },
+  //   {
+  //     data: { buses: 20, cars: 35, trucks: 12 },
+  //     label: "2024-02-05 00:00:00 - 2024-02-06 00:00:00"
+  //   },
+  //   {
+  //     data: { buses: 25, cars: 40, trucks: 15 },
+  //     label: "2024-02-06 00:00:00 - 2024-02-07 00:00:00"
+  //   }
+  // ];
 
   useEffect(() => {
     function formatDate(date: Date) {
@@ -46,38 +76,34 @@ const MainGraphTest: React.FC = () => {
     }
 
     const fetchData = async () => {
-      const newStartDate = formatDate(startDate);
-      const newEndDate = formatDate(endDate);
-      const status = 'MONTHLY';
-    
       try {
-        const response = await fetch(`https://morgan-feet-rolls-mastercard.trycloudflare.com/vehicle_count?status=${status}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          // body: JSON.stringify({
-          //   "from_date": newStartDate,
-          //   "to_date": newEndDate
-          // })
-          body:JSON.stringify({
-            "from_date" : "2024-02-01",
-            "to_date" : "2024-02-29"
-          })
+        let data = JSON.stringify({
+          "from_date": "2024-02-01",
+          "to_date": "2024-02-29"
         });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setGraphData(data.graph_data);
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://morgan-feet-rolls-mastercard.trycloudflare.com/vehicle_count?status=DAILY',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+    
+        const response = await axios.request(config);
+        setGraphData(response.data.graph_data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.log('Error fetching data:', error);
         // Handle error as needed
       }
     };
     
+    
+    
 
     fetchData();
+
 
     // Demo data
     // const demoData: GraphData[] = [ ... ];
