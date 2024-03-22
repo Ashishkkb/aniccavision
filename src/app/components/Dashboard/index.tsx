@@ -49,7 +49,7 @@ const VideoStatistics: React.FC = () => {
                 </div>
                 <div className="bg-white w-screen flex flex-row items-center justify-center py-10">
                     <div className='flex flex-col gap-4 justify-center items-center'>
-                        <div className='ml-6 font-bold text-lg py-2 mt-4'>Vehicles Classification</div>
+                        <div className='ml-6 font-bold text-lg py-2 mt-4'>Live Metrics</div>
                         <div className='mt-4 grid grid-cols-2 ml-6 gap-4'>
                             <div className='p-6 rounded-md bg-[#F2F8FF]'>
                                 Pedestrians: <span className='font-bold'>{pedestrianCount}</span>
